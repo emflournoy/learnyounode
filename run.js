@@ -1,16 +1,34 @@
+
+
+//PROBLEM 7
+// const http = require('http');
+// var fs = require('fs');
+// var link = process.argv[2];
+// http.get(link, function callback(response){
+//   response.setEncoding('utf8');
+//   response.on("data", function(data){
+//     console.log(data);
+//   })
+// })
+
+
+//PROBLEM 6
+//on run2.js and run2b.js
+
+
 //PROBLEM 5
-var fs = require('fs');
-var path = require('path');
-fs.readdir(process.argv[2], function callback(err, arr){
-  if (err){return 'error';}
-  var extFilter = "."+process.argv[3]
-  for (let i=0; i<arr.length; i++){
-    let test = path.extname(arr[i])
-    if (test === extFilter){
-      console.log(arr[i]);
-    }
-  }
-})
+// var fs = require('fs');
+// var path = require('path');
+// fs.readdir(process.argv[2], function callback(err, arr){
+//   if (err){return 'error';}
+//   var extFilter = "."+process.argv[3]
+//   for (let i=0; i<arr.length; i++){
+//     let test = path.extname(arr[i])
+//     if (test === extFilter){
+//       console.log(arr[i]);
+//     }
+//   }
+// })
 
 
 //PROBLEM 4
