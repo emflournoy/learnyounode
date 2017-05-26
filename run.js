@@ -1,18 +1,50 @@
-//PROBLEM 8
-var bl = require('bl');
+//PROBLEM 9
+const bl = require('bl');
 const http = require('http');
-var link = process.argv[2];
-http.get(link, function callback(response){
-  response.pipe(bl(function (err, data) {
-    console.log(data.length);
-    console.log(data.toString());
-  }))
-})
+var links = [process.argv[2],process.argv[3],process.argv[4]];
+var dataArr = [];
+var count = 0;
+
+function getData(arr, pipesFunction){
+  for(var i=0; i<arr.length; i++){
+    var httplink = arr[i];
+    pipesFunction(httplink, i)
+  }
+}
+
+function pipesFunction(httplink, index){
+  http.get(httplink, function(response){
+    response.pipe(bl(function (err,data){
+      if (err) {return console.error(err);}
+      dataArr[index] = data.toString()
+      count++
+      if(count === 3){
+        for (let i=0; i<dataArr.length; i++){
+          console.log(dataArr[i]);
+        }
+      }
+    }))
+  })
+}
+
+getData(links, pipesFunction);
+
+
+
+//PROBLEM 8
+// var bl = require('bl');
+// const http = require('http');
+// var link = process.argv[2];
+// http.get(link, function callback(response){
+//   response.pipe(bl(function (err, data) {
+//     console.log(data.length);
+//     console.log(data.toString());
+//   }))
+// })
 
 
 //PROBLEM 7
 // const http = require('http');
-// var fs = require('fs');
 // var link = process.argv[2];
 // http.get(link, function callback(response){
 //   response.setEncoding('utf8');
