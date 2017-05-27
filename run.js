@@ -1,33 +1,45 @@
+
+//PROBLEM 10
+const strftime = require('strftime');
+var net = require('net');
+var server = net.createServer(function listener(socket){
+  socket.end(strftime('%F %H:%M')+`\n`)
+  console.log("");
+})
+server.listen(process.argv[2]);
+
+
+
 //PROBLEM 9
-const bl = require('bl');
-const http = require('http');
-var links = [process.argv[2],process.argv[3],process.argv[4]];
-var dataArr = [];
-var count = 0;
-
-function getData(arr, pipesFunction){
-  for(var i=0; i<arr.length; i++){
-    var httplink = arr[i];
-    pipesFunction(httplink, i)
-  }
-}
-
-function pipesFunction(httplink, index){
-  http.get(httplink, function(response){
-    response.pipe(bl(function (err,data){
-      if (err) {return console.error(err);}
-      dataArr[index] = data.toString()
-      count++
-      if(count === 3){
-        for (let i=0; i<dataArr.length; i++){
-          console.log(dataArr[i]);
-        }
-      }
-    }))
-  })
-}
-
-getData(links, pipesFunction);
+// const bl = require('bl');
+// const http = require('http');
+// var links = [process.argv[2],process.argv[3],process.argv[4]];
+// var dataArr = [];
+// var count = 0;
+//
+// function getData(arr, pipesFunction){
+//   for(var i=0; i<arr.length; i++){
+//     var httplink = arr[i];
+//     pipesFunction(httplink, i)
+//   }
+// }
+//
+// function pipesFunction(httplink, index){
+//   http.get(httplink, function(response){
+//     response.pipe(bl(function (err,data){
+//       if (err) {return console.error(err);}
+//       dataArr[index] = data.toString()
+//       count++
+//       if(count === 3){
+//         for (let i=0; i<dataArr.length; i++){
+//           console.log(dataArr[i]);
+//         }
+//       }
+//     }))
+//   })
+// }
+//
+// getData(links, pipesFunction);
 
 
 
