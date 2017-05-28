@@ -1,13 +1,67 @@
+//PROBLEM 13
+const http = require('http');
+const url = require('url');
+const fs = require('fs');
+const path = require('path');
 
-//PROBLEM 10
-const strftime = require('strftime');
-var net = require('net');
-var server = net.createServer(function listener(socket){
-  socket.end(strftime('%F %H:%M')+`\n`)
-  console.log("");
+const server = http.createServer((req, res)=>{
+  res.writeHead(200, { 'Content-Type': 'application/json' })
+  if(req.method !== 'GET'){
+    return res.send('only GET')
+  }
+  let urlObj = url.parse(req.url, true);
+  if(urlObj.pathname === '/api/parsetime'){
+    let dateObj = new Date(urlObj.query.iso);
+    let dateReturn = {
+      hour: dateObj.getHours(),
+      minute: dateObj.getMinutes(),
+      second: dateObj.getSeconds()
+    }
+    res.write(JSON.stringify(dateReturn));
+    res.end();
+  } else if(urlObj.pathname === '/api/unixtime'){
+    let unix = {unixtime: Date.parse(urlObj.query.iso)}
+    res.write(JSON.stringify(unix));
+    res.end();
+  } else {
+    return;
+  }
 })
 server.listen(process.argv[2]);
 
+
+//PROBLEM 12
+// const http = require('http');
+// const map = require('through2-map');
+// const fs = require('fs');
+// const server = http.createServer((req, res)=>{
+//   if(req.method !== 'POST'){
+//     return res.send('only POST');
+//   }
+//   req.pipe(map(function (chunk) {
+//       return chunk.toString().toUpperCase();
+//     })).pipe(res);
+// })
+// server.listen(process.argv[2]);
+
+
+//PROBLEM 11
+// const http = require('http');
+// const fs = require('fs');
+// const server = http.createServer(function callback(req, res){
+//   res.writeHead(200, { 'content-type': 'text/plain' })
+//   const fileStream = fs.createReadStream(process.argv[3]);
+//   fileStream.pipe(res)
+// });
+// server.listen(process.argv[2]);
+
+//PROBLEM 10
+// const strftime = require('strftime');
+// var net = require('net');
+// var server = net.createServer(function listener(socket){
+//   socket.end(strftime('%F %H:%M')+`\n`)
+// })
+// server.listen(process.argv[2]);
 
 
 //PROBLEM 9
